@@ -1,4 +1,3 @@
-// src/components/MorseLearner.tsx
 import React, { useEffect, useMemo, useState } from 'react';
 import { Alert, Badge, Button, Card, Col, Container, ProgressBar, Row } from 'react-bootstrap';
 import { MorseTreePipeline } from './MorseTreePipeline';

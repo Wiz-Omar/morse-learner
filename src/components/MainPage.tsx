@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ButtonToolbar, ToggleButtonGroup, ToggleButton, Button } from 'react-bootstrap';
 import { Header } from './Header';
 import { InputField } from './InputField';
 import { Footer } from './Footer';
@@ -17,18 +16,9 @@ export const MainPage: React.FC<Props> = () => {
   const [cipheredText, setCipheredText] = useState<string>('');
   const [popupShow, setPopupShow] = useState<boolean>(false);
   const [cipherKey, setCipherKey] = useState<string>('');
-  //const [learningKey, setLearningKey] = useState<string>('');
-  //const [decodedText, setDecodedText] = useState<string>('');
   const [learnTokens, setLearnTokens] = useState<string[]>([]);
   const [showLearner, setShowLearner] = useState<boolean>(false);
   const [shareLink, setShareLink] = useState<string>('');
-
-  const onStartLearning = () => {
-    const tokens = cipheredText.trim().split(/\s+/).filter(Boolean);
-    setLearnTokens(tokens);
-    setShowLearner(true);
-    setPopupShow(false);
-  };
 
   const callCipher = async (text: string) => {
     const key = generateKey(6);
@@ -53,16 +43,10 @@ export const MainPage: React.FC<Props> = () => {
 
   };
 
-  const callDecipher = (text: string) => {
-    setCipheredText(text);
-    setPopupShow(true);
-  };
-
   const onDecipher = (key: string) => {
     const cleanKey = key.trim().toUpperCase();
     const decoded = decode(cipheredText, cleanKey);
 
-    setDecodedText(decoded);
     setLearnTokens(textToMorseTokens(decoded));
     setPopupShow(false);
     setShowLearner(true);
@@ -70,81 +54,18 @@ export const MainPage: React.FC<Props> = () => {
     return decoded;
   };
 
-  const toggleMode = () => {
-    setMode((prev) => (prev === Modes.Cipher ? Modes.Decipher : Modes.Cipher));
-  };
-
-  const downloadOutput = () => {
-    const blob = new Blob([cipheredText], { type: 'text/plain' });
-    const link: HTMLAnchorElement = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'encodedText.txt';
-    link.click();
-  };
-
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const text = e.target?.result as string;
-      setCipheredText(text);
-      setPopupShow(true);
-    };
-    reader.readAsText(file);
-  };
-
   return (
     <div id="outerDiv">
       <Header />
 
-      <div id="toggleButtonsDiv">
-        <ButtonToolbar>
-          <ToggleButtonGroup
-            type="radio"
-            name="options"
-            value={mode === Modes.Cipher ? 1 : 2}
-            onChange={toggleMode}
-          >
-            <ToggleButton id={'1'} value={1}>
-              Cipher
-            </ToggleButton>
-            <ToggleButton id={'2'} value={2}>
-              Decipher
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </ButtonToolbar>
-      </div>
-
       {mode !== Modes.Learn && (
         <InputField
           key={mode}
-          onSubmitFunction={mode === Modes.Cipher ? callCipher : callDecipher}
+          onSubmitFunction={callCipher}
           className="inputFieldWrapper"
-          placeHolder={
-            mode === Modes.Cipher
-              ? 'Type some text to cipher using morse code!'
-              : 'Paste some ciphered morse code to decipher and learn!'
-          }
-          buttonText={mode === Modes.Cipher ? 'cipher now' : 'decipher now'}
+          placeHolder={'Type some text to learn how each character in morse code!'}
+          buttonText={'Start learning'}
         />
-      )}
-
-      {mode === Modes.Decipher && (
-        <div style={{ display: 'block' }} className="inputFieldWrapper">
-          <p>or</p>
-          <input
-            type="file"
-            accept=".txt"
-            id="fileUpload"
-            style={{ display: 'none' }}
-            onChange={handleFileUpload}
-          />
-          <Button variant="outline-warning" onClick={() => document.getElementById('fileUpload')?.click()}>
-            Upload ciphered .txt file
-          </Button>
-        </div>
       )}
 
       <Popup 

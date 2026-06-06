@@ -8,7 +8,6 @@ type MorseTreePipelineProps = {
 };
 
 const SVG_WIDTH = 1200;
-const SVG_HEIGHT_BASE = 220;
 const TOP_MARGIN = 34;
 const LEVEL_GAP = 86;
 const PADDING_X = 72;
