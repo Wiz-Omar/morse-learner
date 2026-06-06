@@ -3,16 +3,8 @@
     height: auto;
     display: flex;
     flex-direction: column;
-    background-color: #6495ED;
+    background-color: #757575;
     overflow-y: auto;
-}
-
-#toggleButtonsDiv {
-    flex: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1%;
 }
 
 .inputFieldWrapper {

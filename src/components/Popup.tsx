@@ -5,16 +5,13 @@ import { Modes } from '../types/modes';
 interface Props {
   show: boolean;
   toggleShow: () => void;
-  mode: Modes;
   cipherKey?: string;
   shareLink?: string;
-  onDecipher?: (key: string) => void;
 }
 
 export const Popup: React.FC<Props> = ({
-  show, toggleShow, mode, cipherKey, shareLink, onDecipher,
-}) => {
-  const [keyInput, setKeyInput] = useState<string>('');
+    show, toggleShow, cipherKey, shareLink,
+  }) => {
   const [copied, setCopied] = useState<'key' | 'link' | null>(null);
 
   const copyToClipboard = (text: string, which: 'key' | 'link') => {
@@ -52,33 +49,17 @@ export const Popup: React.FC<Props> = ({
     </>
   );
 
-  const renderDecipherContent = () => (
-    <>
-      <p>Enter the secret key to decipher your message:</p>
-      <InputGroup className="mb-3">
-        <Form.Control
-          placeholder="Enter your key..."
-          value={keyInput}
-          onChange={(e) => setKeyInput(e.target.value)}
-        />
-      </InputGroup>
-    </>
-  );
-
   return (
     <Modal show={show} onHide={toggleShow} animation={false}>
       <Modal.Header closeButton>
         <Modal.Title>
-          {mode === Modes.Cipher ? 'Your message is ready to share!' : 'Key required'}
+          {'Your message is ready to share'}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {mode === Modes.Cipher ? renderCipherContent() : renderDecipherContent()}
+        {renderCipherContent()}
       </Modal.Body>
       <Modal.Footer>
-        {mode === Modes.Decipher && (
-          <Button variant="primary" onClick={() => onDecipher!(keyInput)}>Decipher</Button>
-        )}
         <Button variant="secondary" onClick={toggleShow}>Close</Button>
       </Modal.Footer>
     </Modal>

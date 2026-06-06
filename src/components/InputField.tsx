@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
@@ -29,7 +29,7 @@ export const InputField: React.FC<Props> = ({ onSubmitFunction, className, place
                     onSubmit={handleClick}
                     onChange={(e) => setInput(e.target.value)}
                 />
-                <Button variant="outline-light" id="button-addon2" className='bg-dark' onClick={handleClick}>
+                <Button variant="outline-warning" className='' onClick={handleClick}>
                     {buttonText}
                 </Button>
             </InputGroup>
