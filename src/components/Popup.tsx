@@ -60,6 +60,9 @@ export const Popup: React.FC<Props> = ({
         {renderCipherContent()}
       </Modal.Body>
       <Modal.Footer>
+        { shareLink && (
+            <Button variant="primary" onClick={() => {window.open(shareLink)}}> Open link in new tab</Button>
+        )}
         <Button variant="secondary" onClick={toggleShow}>Close</Button>
       </Modal.Footer>
     </Modal>
