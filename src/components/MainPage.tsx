@@ -17,7 +17,7 @@ export const MainPage: React.FC<Props> = () => {
   const [cipheredText, setCipheredText] = useState<string>('');
   const [popupShow, setPopupShow] = useState<boolean>(false);
   const [cipherKey, setCipherKey] = useState<string>('');
-  const [learningKey, setLearningKey] = useState<string>('');
+  //const [learningKey, setLearningKey] = useState<string>('');
   //const [decodedText, setDecodedText] = useState<string>('');
   const [learnTokens, setLearnTokens] = useState<string[]>([]);
   const [showLearner, setShowLearner] = useState<boolean>(false);
