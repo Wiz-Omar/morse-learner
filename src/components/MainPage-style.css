@@ -1,0 +1,25 @@
+#outerDiv {
+    min-height: 100vh;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #6495ED;
+    overflow-y: auto;
+}
+
+#toggleButtonsDiv {
+    flex: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1%;
+}
+
+.inputFieldWrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    margin: 0 auto;
+}
