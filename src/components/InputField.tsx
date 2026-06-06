@@ -29,7 +29,7 @@ export const InputField: React.FC<Props> = ({ onSubmitFunction, className, place
                     onSubmit={handleClick}
                     onChange={(e) => setInput(e.target.value)}
                 />
-                <Button variant="outline-warning" className='' onClick={handleClick}>
+                <Button variant="outline-warning" className='' onClick={handleClick} disabled={input ? false : true}>
                     {buttonText}
                 </Button>
             </InputGroup>

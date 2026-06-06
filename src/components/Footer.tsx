@@ -1,13 +1,11 @@
 import React from 'react'
 
-interface Props {
-
-}
+interface Props {}
 
 export const Footer: React.FC<Props> = () => {
     return (
-        <div>
-            
-        </div>
+        <footer className="appFooter">
+            · · · − − − · · ·
+        </footer>
     );
 }

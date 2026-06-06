@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=DM+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+/* ─── Design tokens ─────────────────────────────────────── */
+:root {
+  --cw-bg:          #07090f;
+  --cw-surface:     #0d1220;
+  --cw-surface-2:   #101620;
+  --cw-amber:       #e8941a;
+  --cw-amber-light: #f0a830;
+  --cw-amber-dim:   rgba(232, 148, 26, 0.12);
+  --cw-text:        #e0d6c4;
+  --cw-muted:       #4d5566;
+  --cw-border:      rgba(232, 148, 26, 0.18);
+}
+
+/* ─── Base ──────────────────────────────────────────────── */
+body {
+  background-color: var(--cw-bg);
+  color: var(--cw-text);
+  font-family: 'DM Sans', system-ui, sans-serif;
+}
+
+/* ─── Navbar ────────────────────────────────────────────── */
+.navbar[data-bs-theme="dark"] {
+  background-color: rgba(7, 9, 15, 0.92) !important;
+  border-bottom: 1px solid var(--cw-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.navbar-brand {
+  font-family: 'Cinzel', serif !important;
+  font-size: 0.9rem !important;
+  color: var(--cw-amber) !important;
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Pulsing dot before brand name */
+.navbar-brand::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cw-amber);
+  flex-shrink: 0;
+  animation: cw-pulse 1.8s ease-in-out infinite;
+}
+
+.nav-link {
+  font-size: 0.78rem !important;
+  color: var(--cw-muted) !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.2s !important;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: var(--cw-amber) !important;
+}
+
+/* ─── Input / Form controls ─────────────────────────────── */
+.form-control {
+  background-color: var(--cw-surface) !important;
+  border-color: var(--cw-border) !important;
+  color: var(--cw-text) !important;
+  font-family: 'IBM Plex Mono', monospace !important;
+  font-size: 0.875rem !important;
+  letter-spacing: 0.03em;
+  transition: border-color 0.2s, box-shadow 0.2s !important;
+}
+
+.form-control::placeholder {
+  color: var(--cw-muted) !important;
+  opacity: 0.7;
+}
+
+.form-control:focus {
+  background-color: var(--cw-surface) !important;
+  border-color: var(--cw-amber) !important;
+  color: var(--cw-text) !important;
+  box-shadow: 0 0 0 3px var(--cw-amber-dim) !important;
+}
+
+/* Main "Generate" button */
+.btn-outline-warning {
+  background-color: var(--cw-amber) !important;
+  border-color: var(--cw-amber) !important;
+  color: #fff !important;
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: background-color 0.2s, border-color 0.2s !important;
+}
+
+.btn-outline-warning:hover,
+.btn-outline-warning:focus {
+  background-color: var(--cw-amber-light) !important;
+  border-color: var(--cw-amber-light) !important;
+  color: #fff !important;
+}
+
+/* ─── Modal ─────────────────────────────────────────────── */
+.modal-content {
+  background-color: var(--cw-surface) !important;
+  border: 1px solid var(--cw-border) !important;
+  border-radius: 10px !important;
+  color: var(--cw-text) !important;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.65),
+    0 0 40px var(--cw-amber-dim) !important;
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--cw-border) !important;
+  padding: 1.25rem 1.5rem !important;
+}
+
+.modal-title {
+  font-family: 'Cinzel', serif !important;
+  font-size: 1rem !important;
+  color: var(--cw-text) !important;
+  letter-spacing: 0.03em;
+}
+
+.modal-body { padding: 1.25rem 1.5rem !important; }
+
+.modal-footer {
+  border-top: 1px solid var(--cw-border) !important;
+  padding: 0.875rem 1.5rem !important;
+}
+
+.btn-close {
+  filter: invert(1) sepia(1) saturate(0) !important;
+  opacity: 0.45 !important;
+}
+.btn-close:hover { opacity: 0.8 !important; }
+
+/* Labels inside modal (fw-semibold used in Popup.tsx) */
+.modal .fw-semibold {
+  font-family: 'IBM Plex Mono', monospace !important;
+  font-size: 0.7rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--cw-amber) !important;
+}
+
+.modal .text-muted { color: var(--cw-muted) !important; }
+
+/* Read-only fields inside modal */
+.modal .form-control {
+  background-color: var(--cw-surface-2) !important;
+  border-color: var(--cw-border) !important;
+  color: var(--cw-text) !important;
+}
+
+.modal .form-control:focus {
+  background-color: var(--cw-surface-2) !important;
+  border-color: var(--cw-amber) !important;
+  box-shadow: none !important;
+}
+
+/* Copy buttons */
+.modal .btn-outline-secondary {
+  background-color: transparent !important;
+  border-color: var(--cw-border) !important;
+  color: var(--cw-amber) !important;
+  font-size: 0.8rem !important;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+.modal .btn-outline-secondary:hover {
+  background-color: var(--cw-amber-dim) !important;
+  color: var(--cw-amber-light) !important;
+  border-color: var(--cw-border) !important;
+}
+
+/* Modal action buttons */
+.modal .btn-primary {
+  background-color: var(--cw-amber) !important;
+  border-color: var(--cw-amber) !important;
+  color: #fff !important;
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 0.85rem !important;
+}
+
+.modal .btn-primary:hover {
+  background-color: var(--cw-amber-light) !important;
+  border-color: var(--cw-amber-light) !important;
+}
+
+.modal .btn-secondary {
+  background-color: transparent !important;
+  border-color: var(--cw-border) !important;
+  color: var(--cw-muted) !important;
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 0.85rem !important;
+}
+
+.modal .btn-secondary:hover {
+  border-color: rgba(255,255,255,0.25) !important;
+  color: var(--cw-text) !important;
+}
+
+.modal .alert-warning {
+  background-color: rgba(232, 148, 26, 0.08) !important;
+  border-color: var(--cw-border) !important;
+  color: var(--cw-amber) !important;
+}
+
+/* ─── Backdrop ──────────────────────────────────────────── */
+.modal-backdrop { background-color: var(--cw-bg) !important; }
+.modal-backdrop.show { opacity: 0.88 !important; }
+
+/* ─── Animations ────────────────────────────────────────── */
+@keyframes cw-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.15; }
+}

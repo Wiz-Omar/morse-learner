@@ -18,7 +18,7 @@ export const MainPage: React.FC<Props> = () => {
     const key = generateKey(6);
     const encoded = encode(text, key);
     setCipherKey(key);
-  
+
     try {
       const res = await fetch('/api/save-message', {
         method: 'POST',
@@ -31,24 +31,41 @@ export const MainPage: React.FC<Props> = () => {
     } catch {
       setShareLink('');
     }
-  
-    setPopupShow(true);
 
+    setPopupShow(true);
   };
 
   return (
     <div id="outerDiv">
       <Header />
-      <InputField
-        key={'plainTextInput'}
-        onSubmitFunction={callCipher}
-        className="inputFieldWrapper"
-        placeHolder={'Type some text to learn each character in morse code'}
-        buttonText={'Generate link'}
-      />
 
-      <Popup 
-        show={popupShow} 
+      <section className="heroSection">
+        {/* Decorative morse label */}
+        <div className="heroLabel">· − − · / · −</div>
+
+        <h1 className="heroTitle">
+          Encode. Share.<br />
+          <span>Learn Morse.</span>
+        </h1>
+
+        <p className="heroSubtitle">
+          Transform your message into Morse code and share it secretly.
+          Only those with the key can decode it.
+        </p>
+
+        <InputField
+          key={'plainTextInput'}
+          onSubmitFunction={callCipher}
+          className="inputFieldWrapper"
+          placeHolder={'Type a message to encode...'}
+          buttonText={'Generate link'}
+        />
+
+        <div className="morseHint">· · · − − − · · ·</div>
+      </section>
+
+      <Popup
+        show={popupShow}
         toggleShow={() => setPopupShow(!popupShow)}
         cipherKey={cipherKey}
         shareLink={shareLink}

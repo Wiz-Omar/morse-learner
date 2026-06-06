@@ -1,17 +1,129 @@
+/* ─── Page shell ─────────────────────────────────────────── */
 #outerDiv {
     min-height: 100vh;
     height: auto;
     display: flex;
     flex-direction: column;
-    background-color: #757575;
+    background-color: #07090f;
     overflow-y: auto;
+    position: relative;
 }
 
-.inputFieldWrapper {
+/* Dot-grid overlay */
+#outerDiv::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(
+        circle,
+        rgba(232, 148, 26, 0.07) 1px,
+        transparent 1px
+    );
+    background-size: 20px 20px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Amber glow at top */
+#outerDiv::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 260px;
+    background: radial-gradient(
+        ellipse 65% 65% at 50% -5%,
+        rgba(232, 148, 26, 0.1) 0%,
+        transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ─── Hero section ───────────────────────────────────────── */
+.heroSection {
+    position: relative;
+    z-index: 1;
     flex: 1;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    width: 50%;
-    margin: 0 auto;
+    justify-content: center;
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+}
+
+/* Decorative morse label above title */
+.heroLabel {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: #e8941a;
+    letter-spacing: 0.2em;
+    margin-bottom: 1.5rem;
+    opacity: 0.75;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.heroLabel::before,
+.heroLabel::after {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: rgba(232, 148, 26, 0.35);
+}
+
+.heroTitle {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 600;
+    line-height: 1.15;
+    color: #e0d6c4;
+    margin: 0 0 0.75rem;
+    letter-spacing: -0.01em;
+}
+
+.heroTitle span { color: #e8941a; }
+
+.heroSubtitle {
+    font-size: 1rem;
+    color: #4d5566;
+    max-width: 420px;
+    line-height: 1.75;
+    margin: 0 auto 2.75rem;
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* Faint morse decoration below input */
+.morseHint {
+    margin-top: 0.875rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: #1e2330;
+    letter-spacing: 0.14em;
+}
+
+/* ─── Input wrapper ──────────────────────────────────────── */
+.inputFieldWrapper {
+    width: 100%;
+    max-width: 540px;
+}
+
+/* Remove the mb-3 default Bootstrap spacing at this breakpoint */
+.inputFieldWrapper .mb-3 { margin-bottom: 0 !important; }
+
+/* ─── Footer ─────────────────────────────────────────────── */
+footer,
+.appFooter {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 1.5rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: #1e2330;
+    letter-spacing: 0.12em;
 }
