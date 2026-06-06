@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import './InputField-style.css';
 
 interface Props {
-    onSubmitFunction: (text: string) => string;
+    onSubmitFunction: (text: string) => void;
     placeHolder: string;
     buttonText: string;
     className ?: string;

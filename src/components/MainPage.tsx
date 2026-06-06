@@ -21,6 +21,7 @@ export const MainPage: React.FC<Props> = () => {
   const [decodedText, setDecodedText] = useState<string>('');
   const [learnTokens, setLearnTokens] = useState<string[]>([]);
   const [showLearner, setShowLearner] = useState<boolean>(false);
+  const [shareLink, setShareLink] = useState<string>('');
 
   const onStartLearning = () => {
     const tokens = cipheredText.trim().split(/\s+/).filter(Boolean);
@@ -29,19 +30,32 @@ export const MainPage: React.FC<Props> = () => {
     setPopupShow(false);
   };
 
-  const callCipher = (text: string) => {
+  const callCipher = async (text: string) => {
     const key = generateKey(6);
     const encoded = encode(text, key);
     setCipheredText(encoded);
     setCipherKey(key);
+  
+    try {
+      const res = await fetch('/api/save-message', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cipherText: encoded }),
+      });
+      const data = await res.json() as { id: string };
+      const link = `${window.location.origin}/d/${data.id}`;
+      setShareLink(link);
+    } catch {
+      setShareLink('');
+    }
+  
     setPopupShow(true);
-    return encoded;
+
   };
 
   const callDecipher = (text: string) => {
     setCipheredText(text);
     setPopupShow(true);
-    return text;
   };
 
   const onDecipher = (key: string) => {
@@ -138,8 +152,7 @@ export const MainPage: React.FC<Props> = () => {
         toggleShow={() => setPopupShow(!popupShow)} 
         mode={mode}
         cipherKey={cipherKey}
-        cipheredOutput={cipheredText}
-        downloadFun={downloadOutput}
+        shareLink={shareLink}
         onDecipher={onDecipher}
       />
   
