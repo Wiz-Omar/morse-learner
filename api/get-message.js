@@ -1,10 +1,19 @@
 const { neon } = require('@neondatabase/serverless');
+import { checkRateLimit } from '@vercel/firewall';
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).end();
 
   const { id } = req.query;
   if (!id || typeof id !== 'string') return res.status(400).json({ error: 'Missing id' });
+
+  //rate-limiting
+  const { rateLimited } = await checkRateLimit('id-lookup', { req });
+  if (rateLimited) {
+    return res.status(429).json({
+      error: 'Too many requests for this message'
+    });
+  }
 
   const sql = neon(process.env.DATABASE_URL);
   const rows = await sql`

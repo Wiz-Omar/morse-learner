@@ -4,5 +4,12 @@
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
+  ],
+  "ratelimits": [
+    {
+      "id": "id-lookup",
+      "limit": 20,
+      "window": "60s"
+    }
   ]
 }
