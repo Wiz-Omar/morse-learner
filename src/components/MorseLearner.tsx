@@ -235,7 +235,6 @@ export const MorseLearner: React.FC<Props> = ({ tokens }) => {
                   fontFamily: 'IBM Plex Mono, monospace',
                   color: isCurrentCompleted ? COLORS.amberLight : 'rgba(200,180,140,0.25)',
                   filter: isCurrentCompleted ? 'none' : 'blur(5px)',
-                  transition: 'filter 0.4s ease, color 0.4s ease',
                   userSelect: isCurrentCompleted ? 'auto' : 'none',
                   lineHeight: 1,
                 }}>
