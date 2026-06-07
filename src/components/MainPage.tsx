@@ -57,7 +57,7 @@ export const MainPage: React.FC<Props> = () => {
           key={'plainTextInput'}
           onSubmitFunction={callCipher}
           className="inputFieldWrapper"
-          placeHolder={'Type a message to encode...'}
+          placeHolder={'Type a message...'}
           buttonText={'Generate link'}
         />
 

@@ -7,6 +7,18 @@ type MorseTreePipelineProps = {
   className?: string;
 };
 
+const COLORS = {
+  surface: '#0d1220',
+  surface2: '#101620',
+  amber: '#e8941a',
+  amberLight: '#f0a830',
+  text: '#e0d6c4',
+  muted: '#9aa3b2',
+  border: 'rgba(232, 148, 26, 0.18)',
+  line: 'rgba(154, 163, 178, 0.45)',
+  nodeFill: '#101620',
+};
+
 const SVG_WIDTH = 1200;
 const TOP_MARGIN = 34;
 const LEVEL_GAP = 86;
@@ -63,12 +75,20 @@ export const MorseTreePipeline: React.FC<MorseTreePipelineProps> = ({
   }, [symbols, renderDepth, clampedStep]);
 
   const isTruncated = symbols.length > MAX_RENDER_DEPTH;
+  const cardStyle: React.CSSProperties = {
+    backgroundColor: 'rgba(13, 18, 32, 0.94)',
+    color: COLORS.text,
+    border: `1px solid ${COLORS.border}`,
+    borderRadius: 24,
+    boxShadow: '0 18px 50px rgba(0,0,0,0.35)',
+    overflow: 'hidden',
+  };
 
   if (!normalizedToken) {
     return (
-      <Card className={className ?? 'shadow-sm border-0'}>
-        <Card.Body>
-          <div className="text-muted">No Morse token selected.</div>
+      <Card className={className ?? 'border-0'} style={cardStyle}>
+        <Card.Body style={{ padding: '1.25rem 1.5rem' }}>
+          <div style={{ color: COLORS.muted }}>No Morse token selected.</div>
         </Card.Body>
       </Card>
     );
@@ -76,13 +96,23 @@ export const MorseTreePipeline: React.FC<MorseTreePipelineProps> = ({
 
   if (normalizedToken === '/') {
     return (
-      <Card className={className ?? 'shadow-sm border-0'}>
-        <Card.Body>
+      <Card className={className ?? 'border-0'} style={cardStyle}>
+        <Card.Body style={{ padding: '1.25rem 1.5rem' }}>
           <div className="d-flex align-items-center gap-2 mb-2">
-            <Badge bg="secondary">SPACE</Badge>
-            <div className="fw-semibold">Word gap</div>
+            <Badge
+              style={{
+                backgroundColor: 'rgba(255,255,255,0.06)',
+                color: COLORS.text,
+                border: `1px solid ${COLORS.border}`,
+                borderRadius: 999,
+                padding: '0.5rem 0.65rem',
+              }}
+            >
+              SPACE
+            </Badge>
+            <div style={{ fontWeight: 700 }}>Word gap</div>
           </div>
-          <div className="text-muted">
+          <div style={{ color: COLORS.muted }}>
             This token represents a separator, so there is no tree path to traverse.
           </div>
         </Card.Body>
@@ -91,33 +121,70 @@ export const MorseTreePipeline: React.FC<MorseTreePipelineProps> = ({
   }
 
   return (
-    <Card className={className ?? 'shadow-sm border-0'}>
-      <Card.Body>
+    <Card className={className ?? 'border-0'} style={cardStyle}>
+      <Card.Body style={{ padding: '1.25rem 1.5rem 1rem' }}>
         <div className="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
           <div>
-            <div className="fw-semibold">Morse tree pipeline</div>
-            <div className="text-muted" style={{ fontSize: '0.95rem' }}>
+            <div
+              style={{
+                fontSize: '0.72rem',
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: COLORS.amber,
+                marginBottom: '0.4rem',
+                fontWeight: 700,
+              }}
+            >
+              Morse tree pipeline
+            </div>
+            <div style={{ color: COLORS.muted, fontSize: '0.95rem' }}>
               Follow the highlighted branch one step at a time.
             </div>
           </div>
 
           <div className="d-flex align-items-center gap-2">
-            <Badge bg="dark">
+            <Badge
+              style={{
+                backgroundColor: 'rgba(255,255,255,0.06)',
+                color: COLORS.text,
+                border: `1px solid ${COLORS.border}`,
+                borderRadius: 999,
+                padding: '0.55rem 0.75rem',
+              }}
+            >
               Step {Math.min(clampedStep, symbols.length)} / {symbols.length}
             </Badge>
-            {isTruncated && <Badge bg="warning" text="dark">truncated view</Badge>}
+            {isTruncated && (
+              <Badge
+                bg="warning"
+                text="dark"
+                style={{ borderRadius: 999, padding: '0.55rem 0.75rem' }}
+              >
+                truncated view
+              </Badge>
+            )}
           </div>
         </div>
 
-        <div style={{ width: '100%', overflowX: 'auto', overflowY: 'visible' }}>
-           <svg
-              viewBox={`0 0 ${SVG_WIDTH} ${svgHeight}`}
-              width="100%"
-              height={svgHeight}
-              preserveAspectRatio="xMidYMin meet"
-              role="img"
-              aria-label="Morse tree pipeline"
-            >
+        <div
+          style={{
+            width: '100%',
+            overflowX: 'auto',
+            overflowY: 'visible',
+            borderRadius: 20,
+            border: `1px solid ${COLORS.border}`,
+            background:
+              'radial-gradient(circle at top, rgba(232,148,26,0.06), transparent 32%), linear-gradient(180deg, rgba(16,22,32,0.96), rgba(13,18,32,0.96))',
+          }}
+        >
+          <svg
+            viewBox={`0 0 ${SVG_WIDTH} ${svgHeight}`}
+            width="100%"
+            height={svgHeight}
+            preserveAspectRatio="xMidYMin meet"
+            role="img"
+            aria-label="Morse tree pipeline"
+          >
             <defs>
               <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
                 <feGaussianBlur stdDeviation="3" result="blur" />
@@ -128,19 +195,19 @@ export const MorseTreePipeline: React.FC<MorseTreePipelineProps> = ({
               </filter>
             </defs>
 
-            {/* Root label */}
+            <rect x="0" y="0" width={SVG_WIDTH} height={svgHeight} rx="20" fill="transparent" />
+
             <text
               x={SVG_WIDTH / 2}
               y={18}
               textAnchor="middle"
               fontSize="16"
               fontWeight={700}
-              fill="#212529"
+              fill={COLORS.text}
             >
               START
             </text>
 
-            {/* Background tree */}
             {Array.from({ length: renderDepth }, (_, depth) => {
               const parentCount = 2 ** depth;
               const nextDepth = depth + 1;
@@ -167,7 +234,7 @@ export const MorseTreePipeline: React.FC<MorseTreePipelineProps> = ({
                           y1={parentPos.y}
                           x2={leftChildPos.x}
                           y2={leftChildPos.y}
-                          stroke={activeLeft ? '#ffc107' : '#cfd4da'}
+                          stroke={activeLeft ? COLORS.amber : COLORS.line}
                           strokeWidth={activeLeft ? 7 : 3}
                           strokeLinecap="round"
                           opacity={activeLeft ? 1 : 0.55}
@@ -178,7 +245,7 @@ export const MorseTreePipeline: React.FC<MorseTreePipelineProps> = ({
                           y1={parentPos.y}
                           x2={rightChildPos.x}
                           y2={rightChildPos.y}
-                          stroke={activeRight ? '#ffc107' : '#cfd4da'}
+                          stroke={activeRight ? COLORS.amber : COLORS.line}
                           strokeWidth={activeRight ? 7 : 3}
                           strokeLinecap="round"
                           opacity={activeRight ? 1 : 0.55}
@@ -191,7 +258,6 @@ export const MorseTreePipeline: React.FC<MorseTreePipelineProps> = ({
               );
             })}
 
-            {/* Nodes */}
             {Array.from({ length: renderDepth + 1 }, (_, depth) => {
               const count = 2 ** depth;
 
@@ -209,15 +275,15 @@ export const MorseTreePipeline: React.FC<MorseTreePipelineProps> = ({
                           cx={pos.x}
                           cy={pos.y}
                           r={NODE_R}
-                          fill={isActive ? '#ffc107' : '#ffffff'}
-                          stroke={isActive ? '#212529' : '#aeb6be'}
+                          fill={isActive ? COLORS.amber : COLORS.nodeFill}
+                          stroke={isActive ? COLORS.text : 'rgba(255,255,255,0.18)'}
                           strokeWidth={isActive ? 4 : 2}
                         />
                         <circle
                           cx={pos.x}
                           cy={pos.y}
                           r={NODE_R - 7}
-                          fill={isActive ? '#212529' : '#ffffff'}
+                          fill={isActive ? '#fff' : COLORS.surface}
                           opacity={isCurrent && isActive ? 0.12 : 0}
                         />
                         {depth > 0 && isActive && (
@@ -227,7 +293,7 @@ export const MorseTreePipeline: React.FC<MorseTreePipelineProps> = ({
                             textAnchor="middle"
                             fontSize="14"
                             fontWeight={800}
-                            fill="#212529"
+                            fill={COLORS.text}
                           >
                             {depth <= clampedStep ? symbolLabel(symbols[depth - 1]) : ''}
                           </text>
@@ -239,7 +305,6 @@ export const MorseTreePipeline: React.FC<MorseTreePipelineProps> = ({
               );
             })}
 
-            {/* Active path marker */}
             {symbols.slice(0, clampedStep).map((symbol, depth) => {
               const nextDepth = depth + 1;
               const parentIndex = prefixIndex(symbols, depth);
@@ -254,10 +319,10 @@ export const MorseTreePipeline: React.FC<MorseTreePipelineProps> = ({
                     y1={parentPos.y}
                     x2={childPos.x}
                     y2={childPos.y}
-                    stroke="#212529"
+                    stroke="#000"
                     strokeWidth={10}
                     strokeLinecap="round"
-                    opacity={0.12}
+                    opacity={0.16}
                   />
                   <text
                     x={(parentPos.x + childPos.x) / 2}
@@ -265,7 +330,7 @@ export const MorseTreePipeline: React.FC<MorseTreePipelineProps> = ({
                     textAnchor="middle"
                     fontSize="13"
                     fontWeight={700}
-                    fill={symbol === '.' ? '#0d6efd' : '#f0ad4e'}
+                    fill={symbol === '.' ? COLORS.amberLight : COLORS.amber}
                   >
                     {symbol === '.' ? 'DOT' : 'DASH'}
                   </text>
@@ -279,7 +344,7 @@ export const MorseTreePipeline: React.FC<MorseTreePipelineProps> = ({
                 y={svgHeight - 10}
                 textAnchor="middle"
                 fontSize="13"
-                fill="#6c757d"
+                fill={COLORS.muted}
               >
                 Only the first {MAX_RENDER_DEPTH} symbols are drawn in the tree.
               </text>
