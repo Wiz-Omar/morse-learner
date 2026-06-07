@@ -11,7 +11,7 @@ module.exports = async function handler(req, res) {
   const { rateLimited } = await checkRateLimit('id-lookup', { req });
   if (rateLimited) {
     return res.status(429).json({
-      error: 'Too many requests for this message'
+      error: 'Too many requests'
     });
   }
 
