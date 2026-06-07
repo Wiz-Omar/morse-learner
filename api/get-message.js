@@ -15,6 +15,8 @@ module.exports = async function handler(req, res) {
     });
   }
 
+  await sql`DELETE FROM your_table WHERE expires_at < NOW()`;
+
   const sql = neon(process.env.DATABASE_URL);
   const rows = await sql`
     SELECT cipher_text FROM morse_messages WHERE id = ${id}
