@@ -142,13 +142,20 @@ export const DecipherPage: React.FC = () => {
 
     fetch(`/api/get-message?id=${id}`)
       .then((res) => {
-        if (!res.ok) throw new Error('not found');
-        return res.json();
+          if (res.status === 429) throw new Error('rate_limited');
+          if (!res.ok) throw new Error('not_found');
+          return res.json();
       })
       .then((data: { cipherText: string }) => {
-        setCipherText(data.cipherText);
+          setCipherText(data.cipherText);
       })
-      .catch(() => setFetchError('This message was not found or may have expired.'))
+      .catch((err) => {
+          if (err.message === 'rate_limited') {
+          setFetchError('Too many requests. Please wait a moment before trying again.');
+          } else {
+          setFetchError('This message was not found or may have expired.');
+          }
+      })
       .finally(() => setLoading(false));
   }, [id]);
 
