@@ -13,7 +13,6 @@ export const Header: React.FC<Props> = () => {
                     <Navbar.Brand href="#home">Morse Learner</Navbar.Brand>
                     <Nav className="me-auto">
                         <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#pricing">Pricing</Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>
