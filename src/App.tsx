@@ -8,7 +8,6 @@ function App() {
     <Routes>
       <Route path="/" element={<MainPage />} />
       <Route path="/d/:id" element={<DecipherPage />} />
-      <Route path="#pricing" element={< PricingPage />} />
     </Routes>
   );
 }
