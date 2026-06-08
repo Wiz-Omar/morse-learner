@@ -1,0 +1,171 @@
+/* ── Sticky panel card ───────────────────────────── */
+.ml-sticky-card {
+  background-color: rgba(10, 14, 26, 0.97) !important;
+  color: #e0d6c4 !important;
+  border: 1px solid rgba(232, 148, 26, 0.18) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(16px);
+}
+
+.ml-sticky-card .card-body {
+  padding: 1rem 1.25rem 0.85rem !important;
+}
+
+/* ── Tree card ───────────────────────────────────── */
+.ml-tree-card {
+  background-color: rgba(13, 18, 32, 0.92) !important;
+  color: #e0d6c4 !important;
+  border: 1px solid rgba(232, 148, 26, 0.18) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.38) !important;
+  backdrop-filter: blur(12px);
+}
+
+.ml-tree-card .card-body {
+  padding: 1.25rem 1.5rem !important;
+}
+
+/* ── Sticky panel wrapper ────────────────────────── */
+.ml-sticky-panel {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  margin-bottom: 1rem;
+}
+
+/* ── Token grid ──────────────────────────────────── */
+.ml-token-grid {
+  overflow-x: auto;
+  padding: 0.4rem 0.5rem;
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(232, 148, 26, 0.18);
+  border-radius: 14px;
+  margin-bottom: 0.85rem;
+  flex-wrap: wrap;
+}
+
+/* ── Section labels ──────────────────────────────── */
+.ml-section-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #e8941a;
+  margin-bottom: 7px;
+  font-weight: 700;
+}
+
+.letter-reveal {
+  font-size: 2.1rem;
+  font-weight: 800;
+  font-family: 'IBM Plex Mono', monospace;
+  line-height: 1;
+}
+
+/* ── Badges ──────────────────────────────────────── */
+.ml-word-gap-badge {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #9aa3b2 !important;
+  border: 1px solid rgba(232, 148, 26, 0.18) !important;
+  border-radius: 999px !important;
+  padding: 0.4rem 0.75rem !important;
+}
+
+.ml-step-badge {
+  background-color: rgba(232, 148, 26, 0.12) !important;
+  color: #f0a830 !important;
+  border: 1px solid rgba(232, 148, 26, 0.3) !important;
+  padding: 0.45rem 0.7rem !important;
+  border-radius: 999px !important;
+  font-size: 0.78rem;
+  font-family: 'IBM Plex Mono', monospace;
+  white-space: nowrap;
+}
+
+/* ── Progress bar ────────────────────────────────── */
+.ml-progress-bar {
+  height: 3px !important;
+  border-radius: 999px !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border: none !important;
+}
+
+/* ── Guidance box ────────────────────────────────── */
+.ml-guidance-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background-color: rgba(232, 148, 26, 0.05);
+  border: 1px solid rgba(232, 148, 26, 0.18);
+  border-radius: 13px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.87rem;
+  line-height: 1.65;
+  color: #9aa3b2;
+}
+
+.ml-guidance-icon {
+  color: #e8941a;
+  font-size: 1rem;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.ml-guidance-text strong {
+  color: #e0d6c4;
+  font-weight: 600;
+}
+
+/* ── Tree scroll wrapper ─────────────────────────── */
+.ml-tree-scroll {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+}
+
+/* ── State hints ─────────────────────────────────── */
+.ml-state-hint {
+  color: #9aa3b2;
+  margin-top: 0.85rem;
+  font-size: 0.87rem;
+}
+
+/* ── No-tokens alert ─────────────────────────────── */
+.ml-no-tokens-alert {
+  background-color: rgba(232, 148, 26, 0.08) !important;
+  border-color: rgba(232, 148, 26, 0.18) !important;
+  color: #e0d6c4 !important;
+}
+
+/* ── MorsePattern ────────────────────────────────── */
+.ml-pattern-container {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.ml-symbol {
+  background-color: #e8941a;
+  height: 13px;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px rgba(232, 148, 26, 0.5);
+}
+
+.ml-symbol--dot {
+  border-radius: 50%;
+  width: 13px;
+}
+
+.ml-symbol--dash {
+  border-radius: 3px;
+  width: 34px;
+}
+
+.ml-pattern-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1rem;
+  color: #9aa3b2;
+  letter-spacing: 0.18em;
+  margin-left: 6px;
+}

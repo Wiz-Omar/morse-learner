@@ -2,16 +2,19 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Alert, Badge, Button, Card, Container, ProgressBar } from 'react-bootstrap';
 import { MorseTreePipeline } from './MorseTreePipeline';
 import { reverseMorseCode } from '../types/morse';
-import './MorseLearner-style.css';
 
 type Props = {
   tokens: string[];
 };
 
 const COLORS = {
+  bg: '#07090f',
+  surface: '#0d1220',
+  surface2: '#101620',
   amber: '#e8941a',
   amberLight: '#f0a830',
   text: '#e0d6c4',
+  muted: '#9aa3b2',
   border: 'rgba(232, 148, 26, 0.18)',
   borderStrong: 'rgba(232, 148, 26, 0.3)',
 };
@@ -34,14 +37,31 @@ function tokenToReveal(token: string): string {
 function MorsePattern({ token }: { token: string }) {
   const symbols = Array.from(token).filter(isDotOrDash);
   return (
-    <div className="ml-pattern-container">
+    <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
       {symbols.map((s, i) => (
         <div
           key={i}
-          className={`ml-symbol ${s === '.' ? 'ml-symbol--dot' : 'ml-symbol--dash'}`}
+          style={{
+            backgroundColor: COLORS.amber,
+            borderRadius: s === '.' ? '50%' : 3,
+            width: s === '.' ? 13 : 34,
+            height: 13,
+            flexShrink: 0,
+            boxShadow: `0 0 6px rgba(232,148,26,0.5)`,
+          }}
         />
       ))}
-      <span className="ml-pattern-text">{token}</span>
+      <span
+        style={{
+          fontFamily: 'IBM Plex Mono, monospace',
+          fontSize: '1rem',
+          color: COLORS.muted,
+          letterSpacing: '0.18em',
+          marginLeft: 6,
+        }}
+      >
+        {token}
+      </span>
     </div>
   );
 }
@@ -96,7 +116,6 @@ export const MorseLearner: React.FC<Props> = ({ tokens }) => {
     if (nextIndex !== -1) { setSelectedIndex(nextIndex); setStep(0); }
   };
 
-  // Conditional — must stay inline
   const tokenButtonStyle = (completed: boolean, active: boolean): React.CSSProperties => ({
     width: 48,
     height: 48,
@@ -107,7 +126,7 @@ export const MorseLearner: React.FC<Props> = ({ tokens }) => {
       : active
         ? 'linear-gradient(180deg, rgba(240,168,48,0.98), rgba(232,148,26,0.94))'
         : 'rgba(255,255,255,0.02)',
-    color: completed ? '#9aa3b2' : active ? '#fff' : COLORS.amber,
+    color: completed ? COLORS.muted : active ? '#fff' : COLORS.amber,
     fontWeight: 800,
     fontSize: '0.92rem',
     display: 'inline-flex',
@@ -119,7 +138,24 @@ export const MorseLearner: React.FC<Props> = ({ tokens }) => {
     flexShrink: 0,
   });
 
-  // Conditional — must stay inline
+  const stickyCardStyle: React.CSSProperties = {
+    backgroundColor: 'rgba(10, 14, 26, 0.97)',
+    color: COLORS.text,
+    border: `1px solid ${COLORS.border}`,
+    borderRadius: 20,
+    boxShadow: '0 8px 32px rgba(0,0,0,0.6)',
+    backdropFilter: 'blur(16px)',
+  };
+
+  const treeCardStyle: React.CSSProperties = {
+    backgroundColor: 'rgba(13, 18, 32, 0.92)',
+    color: COLORS.text,
+    border: `1px solid ${COLORS.border}`,
+    borderRadius: 20,
+    boxShadow: '0 18px 50px rgba(0,0,0,0.38)',
+    backdropFilter: 'blur(12px)',
+  };
+
   const btnStyle = (primary?: boolean): React.CSSProperties => ({
     backgroundColor: primary ? COLORS.amber : 'transparent',
     borderColor: primary ? COLORS.amber : COLORS.border,
@@ -135,12 +171,23 @@ export const MorseLearner: React.FC<Props> = ({ tokens }) => {
     <Container fluid className="pb-5" style={{ color: COLORS.text, paddingTop: '0.75rem' }}>
 
       {/* ── Sticky top panel ─────────────────────────────── */}
-      <div className="ml-sticky-panel">
-        <Card className="ml-sticky-card">
-          <Card.Body>
+      <div style={{ position: 'sticky', top: 0, zIndex: 20, marginBottom: '1rem' }}>
+        <Card style={stickyCardStyle}>
+          <Card.Body style={{ padding: '1rem 1.25rem 0.85rem' }}>
 
             {/* Token grid */}
-            <div className="d-flex gap-2 ml-token-grid">
+            <div
+              className="d-flex gap-2"
+              style={{
+                overflowX: 'auto',
+                padding: '0.4rem 0.5rem',
+                backgroundColor: 'rgba(255,255,255,0.02)',
+                border: `1px solid ${COLORS.border}`,
+                borderRadius: 14,
+                marginBottom: '0.85rem',
+                flexWrap: 'wrap',
+              }}
+            >
               {tokens.map((token, index) => {
                 const completed = completedIndices.has(index);
                 const active = index === selectedIndex;
@@ -163,23 +210,33 @@ export const MorseLearner: React.FC<Props> = ({ tokens }) => {
             {/* Current token info row */}
             <div className="d-flex flex-wrap align-items-center gap-3">
 
-              {/* Morse pattern */}
+              {/* Morse pattern - always visible */}
               <div style={{ flex: '1 1 160px', minWidth: 0 }}>
-                <div className="ml-section-label">Pattern</div>
+                <div style={{ fontSize: '0.65rem', letterSpacing: '0.13em', textTransform: 'uppercase', color: COLORS.amber, marginBottom: 7, fontWeight: 700 }}>
+                  Pattern
+                </div>
                 {isWordGap ? (
-                  <Badge className="ml-word-gap-badge">SPACE — word separator</Badge>
+                  <Badge style={{ backgroundColor: 'rgba(255,255,255,0.05)', color: COLORS.muted, border: `1px solid ${COLORS.border}`, borderRadius: 999, padding: '0.4rem 0.75rem' }}>
+                    SPACE — word separator
+                  </Badge>
                 ) : (
                   <MorsePattern token={selectedToken} />
                 )}
               </div>
 
-              {/* Revealed letter — conditional style must stay inline */}
+              {/* Revealed letter - blurred until complete */}
               <div style={{ textAlign: 'center', minWidth: 52 }}>
-                <div className="ml-section-label">Letter</div>
-                <div className='letter-reveal' style={{
+                <div style={{ fontSize: '0.65rem', letterSpacing: '0.13em', textTransform: 'uppercase', color: COLORS.amber, marginBottom: 4, fontWeight: 700 }}>
+                  Letter
+                </div>
+                <div style={{
+                  fontSize: '2.1rem',
+                  fontWeight: 800,
+                  fontFamily: 'IBM Plex Mono, monospace',
                   color: isCurrentCompleted ? COLORS.amberLight : 'rgba(200,180,140,0.25)',
                   filter: isCurrentCompleted ? 'none' : 'blur(5px)',
                   userSelect: isCurrentCompleted ? 'auto' : 'none',
+                  lineHeight: 1,
                 }}>
                   {revealedValue}
                 </div>
@@ -213,15 +270,25 @@ export const MorseLearner: React.FC<Props> = ({ tokens }) => {
               </div>
 
               {/* Step counter */}
-              <Badge className="ml-step-badge">
+              <Badge style={{
+                backgroundColor: 'rgba(232,148,26,0.12)',
+                color: COLORS.amberLight,
+                border: `1px solid ${COLORS.borderStrong}`,
+                padding: '0.45rem 0.7rem',
+                borderRadius: 999,
+                fontSize: '0.78rem',
+                fontFamily: 'IBM Plex Mono, monospace',
+                whiteSpace: 'nowrap',
+              }}>
                 {Math.min(step, maxStep)} / {maxStep}
               </Badge>
             </div>
 
-            {/* Progress bar */}
+            {/* Thin progress bar */}
             <ProgressBar
               now={progress}
-              className="ml-progress-bar mt-3"
+              className="mt-3"
+              style={{ height: 3, borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.05)', border: 'none' }}
               variant="warning"
             />
           </Card.Body>
@@ -230,37 +297,49 @@ export const MorseLearner: React.FC<Props> = ({ tokens }) => {
 
       {/* ── Tree card ────────────────────────────────────── */}
       {tokens.length === 0 ? (
-        <Alert variant="warning" className="ml-no-tokens-alert">
+        <Alert variant="warning" style={{ backgroundColor: 'rgba(232,148,26,0.08)', borderColor: COLORS.border, color: COLORS.text }}>
           No Morse tokens available.
         </Alert>
       ) : (
-        <Card className="ml-tree-card">
-          <Card.Body>
+        <Card style={treeCardStyle}>
+          <Card.Body style={{ padding: '1.25rem 1.5rem' }}>
 
-            {/* Guidance */}
-            <div className="ml-guidance-box">
-              <span className="ml-guidance-icon">↓</span>
-              <span className="ml-guidance-text">
+            {/* Guidance — one-time read, above tree */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: 10,
+              backgroundColor: 'rgba(232,148,26,0.05)',
+              border: `1px solid ${COLORS.border}`,
+              borderRadius: 13,
+              padding: '0.75rem 1rem',
+              marginBottom: '1.25rem',
+              fontSize: '0.87rem',
+              lineHeight: 1.65,
+              color: COLORS.muted,
+            }}>
+              <span style={{ color: COLORS.amber, fontSize: '1rem', marginTop: 1, flexShrink: 0 }}>↓</span>
+              <span>
                 Follow the highlighted path through the tree.{' '}
-                <strong>Next Branch</strong> steps forward one symbol at a time.
+                <strong style={{ color: COLORS.text, fontWeight: 600 }}>Next Branch</strong> steps forward one symbol at a time.
                 Complete all branches to reveal the letter above.{' '}
-                <strong>Next Token</strong> moves on once a letter is locked in.
+                <strong style={{ color: COLORS.text, fontWeight: 600 }}>Next Token</strong> moves on once a letter is locked in.
               </span>
             </div>
 
             {/* Tree */}
-            <div className="ml-tree-scroll">
+            <div style={{ width: '100%', overflowX: 'auto', overflowY: 'visible' }}>
               <MorseTreePipeline token={selectedToken} step={step} />
             </div>
 
-            {/* State hints */}
+            {/* State hints below tree */}
             {isCurrentCompleted && !isWordGap && (
-              <div className="ml-state-hint">
+              <div style={{ color: COLORS.muted, marginTop: '0.85rem', fontSize: '0.87rem' }}>
                 ✓ Character complete — letter revealed and locked above.
               </div>
             )}
             {isWordGap && (
-              <div className="ml-state-hint">
+              <div style={{ color: COLORS.muted, marginTop: '0.85rem', fontSize: '0.87rem' }}>
                 This token is a word gap — no tree path to traverse.
               </div>
             )}
