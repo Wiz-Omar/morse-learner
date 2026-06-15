@@ -41,7 +41,6 @@ function MorsePattern({ token }: { token: string }) {
           className={`ml-symbol ${s === '.' ? 'ml-symbol--dot' : 'ml-symbol--dash'}`}
         />
       ))}
-      <span className="ml-pattern-text">{token}</span>
     </div>
   );
 }

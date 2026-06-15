@@ -32,7 +32,7 @@ export const Popup: React.FC<Props> = ({
         </Button>
       </InputGroup>
 
-      <p className="mb-1 fw-semibold">Shareable link</p>
+      <p className="mb-1 fw-semibold">Shareable link for 12 hours</p>
       <p className="text-muted small">Anyone with this link can enter the key above to start learning.</p>
       {shareLink ? (
         <InputGroup className="mb-3">
