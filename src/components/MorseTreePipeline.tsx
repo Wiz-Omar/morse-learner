@@ -135,10 +135,10 @@ export const MorseTreePipeline: React.FC<MorseTreePipelineProps> = ({
                 fontWeight: 700,
               }}
             >
-              Morse tree pipeline
+              Morse Tree
             </div>
             <div style={{ color: COLORS.muted, fontSize: '0.95rem' }}>
-              Follow the highlighted branch one step at a time.
+              A left branch is a dot, and a right branch is a dash. This visualization will help you learn morse code more intuitively!
             </div>
           </div>
 

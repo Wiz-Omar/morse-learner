@@ -40,7 +40,7 @@ export const MainPage: React.FC<Props> = () => {
       <Header />
 
       <section className="heroSection">
-        {/* Decorative morse label */}
+
         <div className="heroLabel">· − − · / · −</div>
 
         <h1 className="heroTitle">

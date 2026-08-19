@@ -30,7 +30,6 @@ function tokenToReveal(token: string): string {
   return letter ? String(letter).toUpperCase() : '?';
 }
 
-/** Renders dots and dashes as visual shapes */
 function MorsePattern({ token }: { token: string }) {
   const symbols = Array.from(token).filter(isDotOrDash);
   return (
@@ -95,7 +94,6 @@ export const MorseLearner: React.FC<Props> = ({ tokens }) => {
     if (nextIndex !== -1) { setSelectedIndex(nextIndex); setStep(0); }
   };
 
-  // Conditional — must stay inline
   const tokenButtonStyle = (completed: boolean, active: boolean): React.CSSProperties => ({
     width: 48,
     height: 48,
@@ -118,7 +116,6 @@ export const MorseLearner: React.FC<Props> = ({ tokens }) => {
     flexShrink: 0,
   });
 
-  // Conditional — must stay inline
   const btnStyle = (primary?: boolean): React.CSSProperties => ({
     backgroundColor: primary ? COLORS.amber : 'transparent',
     borderColor: primary ? COLORS.amber : COLORS.border,
@@ -133,12 +130,10 @@ export const MorseLearner: React.FC<Props> = ({ tokens }) => {
   return (
     <Container fluid className="pb-5" style={{ color: COLORS.text, paddingTop: '0.75rem' }}>
 
-      {/* ── Sticky top panel ─────────────────────────────── */}
       <div className="ml-sticky-panel">
         <Card className="ml-sticky-card">
           <Card.Body>
 
-            {/* Token grid */}
             <div className="d-flex gap-2 ml-token-grid">
               {tokens.map((token, index) => {
                 const completed = completedIndices.has(index);
@@ -159,10 +154,8 @@ export const MorseLearner: React.FC<Props> = ({ tokens }) => {
               })}
             </div>
 
-            {/* Current token info row */}
             <div className="d-flex flex-wrap align-items-center gap-3">
 
-              {/* Morse pattern */}
               <div style={{ flex: '1 1 160px', minWidth: 0 }}>
                 <div className="ml-section-label">Pattern</div>
                 {isWordGap ? (
@@ -172,7 +165,6 @@ export const MorseLearner: React.FC<Props> = ({ tokens }) => {
                 )}
               </div>
 
-              {/* Revealed letter — conditional style must stay inline */}
               <div style={{ textAlign: 'center', minWidth: 52 }}>
                 <div className="ml-section-label">Letter</div>
                 <div className='letter-reveal' style={{
@@ -184,7 +176,6 @@ export const MorseLearner: React.FC<Props> = ({ tokens }) => {
                 </div>
               </div>
 
-              {/* Controls */}
               <div className="d-flex gap-2 flex-wrap">
                 <Button
                   onClick={handleNextBranch}
@@ -207,17 +198,15 @@ export const MorseLearner: React.FC<Props> = ({ tokens }) => {
                   style={btnStyle()}
                   variant="secondary"
                 >
-                  Next Token
+                  Next Character
                 </Button>
               </div>
 
-              {/* Step counter */}
               <Badge className="ml-step-badge">
                 {Math.min(step, maxStep)} / {maxStep}
               </Badge>
             </div>
 
-            {/* Progress bar */}
             <ProgressBar
               now={progress}
               className="ml-progress-bar mt-3"
@@ -227,40 +216,35 @@ export const MorseLearner: React.FC<Props> = ({ tokens }) => {
         </Card>
       </div>
 
-      {/* ── Tree card ────────────────────────────────────── */}
       {tokens.length === 0 ? (
         <Alert variant="warning" className="ml-no-tokens-alert">
-          No Morse tokens available.
+          No Morse characters available.
         </Alert>
       ) : (
         <Card className="ml-tree-card">
           <Card.Body>
 
-            {/* Guidance */}
             <div className="ml-guidance-box">
-              <span className="ml-guidance-icon">↓</span>
               <span className="ml-guidance-text">
                 Follow the highlighted path through the tree.{' '}
-                <strong>Next Branch</strong> steps forward one symbol at a time.
-                Complete all branches to reveal the letter above.{' '}
-                <strong>Next Token</strong> moves on once a letter is locked in.
+                The <strong>Next Branch</strong> button steps forward one morse symbol 
+                at a time until all branches are completed and the letter is revealed.{' '}
+                The <strong>Next Character</strong> button moves on once a letter is locked in.{' '}
               </span>
             </div>
 
-            {/* Tree */}
             <div className="ml-tree-scroll">
               <MorseTreePipeline token={selectedToken} step={step} />
             </div>
 
-            {/* State hints */}
             {isCurrentCompleted && !isWordGap && (
               <div className="ml-state-hint">
-                ✓ Character complete — letter revealed and locked above.
+                Letter complete!
               </div>
             )}
             {isWordGap && (
               <div className="ml-state-hint">
-                This token is a word gap — no tree path to traverse.
+                This character is a space. Nothing to learn here!
               </div>
             )}
           </Card.Body>
