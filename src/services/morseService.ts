@@ -38,7 +38,7 @@ export function encode(decryptedText: string, key: string): string{ //no fake no
             }
         }
     }
-    return encodedText.trim(); //remove trailing spaces via trim
+    return encodedText.trim(); //remove trailing spaces
 }
 
 export function decode(encryptedText: string, key: string): string{
@@ -55,8 +55,6 @@ export function decode(encryptedText: string, key: string): string{
             }
         })
         .join('');
-
-    //console.log(charsString);
 
     for (let i: number = 0; i < charsString.length; i++){
         const char = charsString[i].toUpperCase();
