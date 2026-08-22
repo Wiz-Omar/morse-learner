@@ -239,7 +239,7 @@ export const MorseLearner: React.FC<Props> = ({ tokens }) => {
 
             {isCurrentCompleted && !isWordGap && (
               <div className="ml-state-hint">
-                Letter complete!
+                Character complete!
               </div>
             )}
             {isWordGap && (

@@ -29,7 +29,6 @@ body {
 }
 
 .navbar-brand {
-  font-family: 'Cinzel', serif !important;
   font-size: 0.9rem !important;
   color: var(--cw-amber) !important;
   letter-spacing: 0.1em;
@@ -112,9 +111,7 @@ body {
   border: 1px solid var(--cw-border) !important;
   border-radius: 10px !important;
   color: var(--cw-text) !important;
-  box-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.65),
-    0 0 40px var(--cw-amber-dim) !important;
+  box-shadow: none !important;
 }
 
 .modal-header {
@@ -123,7 +120,6 @@ body {
 }
 
 .modal-title {
-  font-family: 'Cinzel', serif !important;
   font-size: 1rem !important;
   color: var(--cw-text) !important;
   letter-spacing: 0.03em;

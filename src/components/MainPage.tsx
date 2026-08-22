@@ -44,13 +44,13 @@ export const MainPage: React.FC<Props> = () => {
         <div className="heroLabel">· − − · / · −</div>
 
         <h1 className="heroTitle">
-          Encode. Share.<br />
+          Encode, Share.<br />
           <span>Learn Morse.</span>
         </h1>
 
         <p className="heroSubtitle">
           Transform your message into Morse code and share it secretly.
-          Only those with the key can decode it.
+          Those with the key can decode it.
         </p>
 
         <InputField

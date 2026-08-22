@@ -26,7 +26,6 @@
   color: #e0d6c4 !important;
   border: 1px solid rgba(232, 148, 26, 0.18) !important;
   border-radius: 24px !important;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45) !important;
   backdrop-filter: blur(12px);
 }
 
